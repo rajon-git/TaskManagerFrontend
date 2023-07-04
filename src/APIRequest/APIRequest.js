@@ -4,9 +4,12 @@ import {getUserDetails,getToken,setToken,setUserDetails } from "../helper/Sessio
 
 import store from "../redux/store/store";
 import { HideLoader, ShowLoader } from "../redux/state-slice/settings-slice";
+import { CanceledTask, CompletedTask, ProgressTask, SetNewTask } from "../redux/state-slice/task-slice";
+import { SetSummary } from "../redux/state-slice/summary-slice";
 
 const BaseURL = "https://ill-pear-raven-sari.cyclic.app/api/v1"
 const AxiosHeader = { headers: { token: getToken() } };
+const axiosConfig= { headers: { token: getToken() } };
 
 export function RegistrationRequest(
     email,
@@ -104,6 +107,108 @@ export function NewTaskRequest(title, description) {
       ErrorToast("Something Went Wrong=");
       store.dispatch(HideLoader());
       // UnAuthorizeRequest(error);
+      return false;
+    });
+}
+
+//get task lists
+
+// Task List By Status
+export function TaskListByStatus(status) {
+  store.dispatch(ShowLoader());
+  const URL = `${BaseURL}/listTaskByStatus/${status}`;
+  axios.get(URL, AxiosHeader).then((res) => {
+      store.dispatch(HideLoader());
+      if (res.status === 200) {
+        if (status === "New") {
+          store.dispatch(SetNewTask(res.data["data"]));
+        } else if (status === "Completed") {
+          store.dispatch(CompletedTask(res.data["data"]));
+        } else if (status === "Canceled") {
+          store.dispatch(CanceledTask(res.data["data"]));
+        } else if (status === "Progress") {
+          store.dispatch(ProgressTask(res.data["data"]));
+        }
+      } else {
+        ErrorToast("Something Went Wrong");
+      }
+    })
+    .catch((error) => {
+      // console.log(error.massage)
+      ErrorToast("Something Went Wrong=");
+      store.dispatch(HideLoader());
+      //UnAuthorizeRequest(error);
+      return false;
+    });
+}
+
+// Summary Request
+export function SummaryRequest(){
+  store.dispatch(ShowLoader())
+  let URL=`${BaseURL}/taskStatusCount`;
+  axios.get(URL,AxiosHeader).then((res)=>{
+      store.dispatch(HideLoader())
+      if(res.status===200){
+          store.dispatch(SetSummary(res.data['data']))
+      }
+      else{
+          ErrorToast("Something Went Wrong")
+      }
+  }).catch((err)=>{
+      ErrorToast("Something Went Wrong")
+      store.dispatch(HideLoader())
+  });
+}
+
+// Delete Request
+export function DeleteRequest(id) {
+
+  store.dispatch(ShowLoader());
+  const URL = `${BaseURL}/deleteTask/${id}`;
+  return axios.post(URL, null, axiosConfig)
+    .then((res) => {
+      store.dispatch(HideLoader());
+
+      if (res.status === 200) {
+        SuccessToast("Delete Success!");
+        return true;
+      } else {
+        ErrorToast("Something Went Wrong!");
+        return false;
+      }
+    })
+    .catch((error) => {
+      // debugger
+      console.log(error.message);
+      ErrorToast("Something Went Wrong=");
+      store.dispatch(HideLoader());
+     // UnAuthorizeRequest(error);
+      return false;
+    });
+}
+
+//Update Status Request
+export function UpdateStatusRequest(id, status) {
+  store.dispatch(ShowLoader());
+  const URL = `${BaseURL}/updateStatus/${id}/${status}`;
+  return axios.post(URL, null, axiosConfig)
+    .then((res) => {
+      store.dispatch(HideLoader());
+
+      if (res.status === 200) {
+        SuccessToast("Update status Success!");
+        return true;
+      } else {
+        ErrorToast("Update status Filed!");
+        return false;
+      }
+    })
+    .catch((error) => {
+      // debugger
+      console.log(error.message);
+      ErrorToast("Something Went Wrong");
+      store.dispatch(HideLoader());
+      //UnAuthorizeRequest(error);
       return false;
     });
 }

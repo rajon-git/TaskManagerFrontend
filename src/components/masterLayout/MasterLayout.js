@@ -12,7 +12,7 @@ import { BsHourglass, BsListNested } from "react-icons/bs";
 import { MdOutlineCancelPresentation } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.svg";
-//import { getUserDetails, removeSession } from "../../helper/SessionHelper";
+import { getUserDetails, removeSession } from "../../helper/SessionHelper";
 
 const MasterLayout = (props) => {
   let contentRef,
@@ -35,9 +35,9 @@ const MasterLayout = (props) => {
     }
   };
 
- // const logOut = () => {
-    //removeSession();
- // };
+ const logOut = () => {
+    removeSession();
+ };
 
   return (
     <>
@@ -64,17 +64,17 @@ const MasterLayout = (props) => {
                     alt="user"
                     className="icon-nav-img"
                   />
-                  {/* <h6>{getUserDetails()["firstName"]}</h6> */}
+                  <h6>{getUserDetails()["firstName"]}</h6>
                   <hr className="user-dropdown-divider" />
                 </div>
-                <NavLink to="/profile" className="side-bar-item">
+                <NavLink to="/Profile" className="side-bar-item">
                   <AiOutlineUser className="side-bar-item-icon" />
                   <span className="side-bar-item-caption">Profile</span>
                 </NavLink>
-                {/* <a onClick={logOut} className="side-bar-item">
+                <a onClick={logOut} className="side-bar-item">
                   <AiOutlineLogout className="side-bar-item-icon" />
                   <span className="side-bar-item-caption">Logout</span>
-                </a> */}
+                </a>
               </div>
             </div>
           </div> }

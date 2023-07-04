@@ -53,6 +53,7 @@ else {
                 </Routes>
             </BrowserRouter>
             <FullScreenLoader/>
+            <Toaster/>
         </>
     );
 }

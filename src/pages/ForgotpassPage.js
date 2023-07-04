@@ -4,9 +4,9 @@ import LazyLoader from '../components/masterLayout/LazyLoader';
 const ForgotpassPage = () => {
     return (
         <>
-            <Suspense fallback={<LazyLoader/>}>
-
-</Suspense>
+         <Suspense fallback={<LazyLoader/>}>
+    
+         </Suspense>
         </>
     );
 };
