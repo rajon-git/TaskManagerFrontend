@@ -53,14 +53,14 @@ const MasterLayout = (props) => {
           { <div className="float-right h-auto d-flex">
             <div className="user-dropdown">
               <img
-                //src={getUserDetails()["photo"]}
+                src={getUserDetails()["photo"]}
                 alt="user"
                 className="icon-nav-img icon-nav"
               />
               <div className="user-dropdown-content">
                 <div className="mt-4 text-center">
                   <img
-                   // src={getUserDetails()["photo"]}
+                   src={getUserDetails()["photo"]}
                     alt="user"
                     className="icon-nav-img"
                   />

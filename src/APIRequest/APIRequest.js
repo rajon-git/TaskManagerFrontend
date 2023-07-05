@@ -7,7 +7,7 @@ import { HideLoader, ShowLoader } from "../redux/state-slice/settings-slice";
 import { CanceledTask, CompletedTask, ProgressTask, SetNewTask } from "../redux/state-slice/task-slice";
 import { SetSummary } from "../redux/state-slice/summary-slice";
 
-const BaseURL = "https://ill-pear-raven-sari.cyclic.app/api/v1"
+const BaseURL = "https://taskmanager-rajon.cyclic.app/api/v1"
 const AxiosHeader = { headers: { token: getToken() } };
 const axiosConfig= { headers: { token: getToken() } };
 
