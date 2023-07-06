@@ -6,6 +6,7 @@ import store from "../redux/store/store";
 import { HideLoader, ShowLoader } from "../redux/state-slice/settings-slice";
 import { CanceledTask, CompletedTask, ProgressTask, SetNewTask } from "../redux/state-slice/task-slice";
 import { SetSummary } from "../redux/state-slice/summary-slice";
+import { SetProfile, SetProfileDetails } from "../redux/state-slice/profile-slice";
 
 const BaseURL = "https://taskmanager-rajon.cyclic.app/api/v1"
 const AxiosHeader = { headers: { token: getToken() } };
@@ -208,6 +209,52 @@ export function UpdateStatusRequest(id, status) {
       console.log(error.message);
       ErrorToast("Something Went Wrong");
       store.dispatch(HideLoader());
+      //UnAuthorizeRequest(error);
+      return false;
+    });
+}
+
+// Profile Details
+export function GetProfileDetails() {
+  store.dispatch(ShowLoader());
+  const URL = `${BaseURL}/profileDetails`;
+  axios.get(URL, AxiosHeader).then((res) => {
+      store.dispatch(HideLoader());
+      if (res.status === 200) {
+        store.dispatch(SetProfile(res.data["data"]));
+      } else {
+        ErrorToast("Something Went Wrong");
+      }
+    })
+    .catch((error) => {
+      // console.log(error.massage)
+      ErrorToast("Something Went Wrong=");
+      store.dispatch(HideLoader());
+      //UnAuthorizeRequest(error);
+      return false;
+    });
+}
+
+// Profile update
+export function ProfileUpdateRequest(email,firstName,lastName,mobile,password,photo) {
+  store.dispatch(ShowLoader());
+  const URL = `${BaseURL}/profileUpdate`;
+  let reqBody = {email,firstName,lastName,mobile,password,photo,};
+  let localBody = {email,firstName,lastName,mobile,password,photo,};
+  return axios.post(URL, reqBody, axiosConfig).then((res) => {
+      store.dispatch(HideLoader());
+      if (res.status === 200) {
+        SuccessToast("Profile update success");
+        setUserDetails(localBody);
+        return true;
+      } else {
+        ErrorToast("Something Went Wrong");
+        return false;
+      }
+    })
+    .catch((error) => {
+      store.dispatch(HideLoader());
+      ErrorToast("Something Went Wrong");
       //UnAuthorizeRequest(error);
       return false;
     });
