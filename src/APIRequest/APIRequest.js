@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ErrorToast, SuccessToast } from "../helper/FormHelper";
-import {getUserDetails,getToken,setToken,setUserDetails } from "../helper/SessionHelper.js";
+import {getUserDetails,getToken,setToken,setUserDetails, setOtp, setEmail, getEmail } from "../helper/SessionHelper.js";
 
 import store from "../redux/store/store";
 import { HideLoader, ShowLoader } from "../redux/state-slice/settings-slice";
@@ -259,3 +259,33 @@ export function ProfileUpdateRequest(email,firstName,lastName,mobile,password,ph
       return false;
     });
 }
+
+// Forgat Password
+export function VerifyEmailRequest(email) {
+  store.dispatch(ShowLoader());
+  const URL = BaseURL+"/VerifyEmail/"+email;
+  return axios.get(URL).then((res)=>{
+    store.dispatch(HideLoader())
+    if(res.status===200){
+
+        if(res.data['status']==="fail"){
+            ErrorToast("No user found");
+            return false;
+        }
+        else{
+            setEmail(email)
+            SuccessToast("A 6 Digit verification code has been sent to your email address. ");
+            return true;
+        }
+    }
+    else{
+        ErrorToast("Something Went Wrong");
+        return false;
+    }
+}).catch((err)=>{
+    ErrorToast("Something Went Wrong")
+    store.dispatch(HideLoader())
+    return false;
+});
+}
+

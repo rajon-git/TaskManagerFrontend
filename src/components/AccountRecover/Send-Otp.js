@@ -1,24 +1,24 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-// import { VerifyEmailRequest } from "../../APIRequest/ApiRequest";
+import { VerifyEmailRequest } from "../../APIRequest/APIRequest";
 import { ErrorToast, IsEmail } from "../../helper/FormHelper";
 
 const SendOTP = () => {
   let emailRef = useRef();
   let navigate = useNavigate();
 
-  //   let submitOtpRequest = () => {
-  //     let email = emailRef.value;
-  //     if (IsEmail(email)) {
-  //       ErrorToast("Valid Email Address Required !");
-  //     } else {
-  //       VerifyEmailRequest(email).then((result) => {
-  //         if (result === true) {
-  //           navigate("/verifyOtp");
-  //         }
-  //       })
-  //     }
-  //   };
+    let submitOtpRequest = () => {
+      let email = emailRef.value;
+      if (IsEmail(email)) {
+        ErrorToast("Valid Email Address Required !");
+      } else {
+        VerifyEmailRequest(email).then((result) => {
+          if (result === true) {
+            navigate("/VerifyOtp");
+          }
+        })
+      }
+    };
 
 //   const submitOtpRequest = async () => {
 //     const emailInput = emailRef.value;
@@ -30,7 +30,7 @@ const SendOTP = () => {
 //     const isVerified = await VerifyEmailRequest(emailInput);
 //     console.log(isVerified);
 //     if (isVerified) {
-//       navigate("/verifyOtp");
+//       navigate("/VerifyOTP");
 //     }
 //   };
 
@@ -52,7 +52,7 @@ const SendOTP = () => {
                 />
                 <br />
                 <button
-                //   onClick={submitOtpRequest}
+                  onClick={submitOtpRequest}
                   className="btn btn-primary h6 float-end w-100 animated fadeInUp"
                 >
                   Next

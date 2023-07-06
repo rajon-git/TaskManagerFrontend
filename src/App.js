@@ -17,6 +17,7 @@ import { getToken } from './helper/SessionHelper';
 import SendOTPPage from './pages/AccountRecover/SendOtpPage';
 import SendOtpPage from './pages/AccountRecover/SendOtpPage';
 import VerifyOtpPage from './pages/AccountRecover/VerifyOtpPage';
+import CreatePasswordPage from './pages/AccountRecover/CreatePasswordPage';
 
 const App = () => {
   if(getToken()){
@@ -50,7 +51,7 @@ else {
 
                     <Route  path="/SendOTP" element={<SendOtpPage/>}/>
                     <Route  path="/VerifyOTP" element={<VerifyOtpPage/>}/>
-                    {/* <Route  path="/CreatePassword" element={<CreatePasswordPage/>}/> */}
+                    <Route  path="/CreatePassword" element={<CreatePasswordPage/>}/>
 
                     <Route path="*" element={<Page404/>}/>
                 </Routes>
