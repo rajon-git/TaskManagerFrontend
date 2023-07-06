@@ -260,10 +260,10 @@ export function ProfileUpdateRequest(email,firstName,lastName,mobile,password,ph
     });
 }
 
-// Forgat Password
+// Recover Password Step 01 send OTP
 export function VerifyEmailRequest(email) {
   store.dispatch(ShowLoader());
-  const URL = BaseURL+"/VerifyEmail/"+email;
+  const URL = BaseURL+"/verifyEmail/"+email;
   return axios.get(URL).then((res)=>{
     store.dispatch(HideLoader())
     if(res.status===200){
@@ -289,3 +289,30 @@ export function VerifyEmailRequest(email) {
 });
 }
 
+// Recover Password Step 02 Verify OTP
+export function VerifyOTPRequest(email,otp){
+  store.dispatch(ShowLoader())
+  let URL=BaseURL+"/verifyOTP/"+email+"/"+otp;
+  return axios.get(URL).then((res)=>{
+      store.dispatch(HideLoader())
+      if(res.status===200){
+          if(res.data['status']==="fail"){
+              ErrorToast(res.data['data']);
+              return false;
+          }
+          else{
+              setOtp(otp)
+              SuccessToast("Code Verification Success");
+              return true;
+          }
+      }
+      else{
+          ErrorToast("Something Went Wrong")
+          return false;
+      }
+  }).catch((err)=>{
+      ErrorToast("Something Went Wrong")
+      store.dispatch(HideLoader())
+      return false;
+  });
+}

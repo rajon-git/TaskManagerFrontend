@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactCodeInput from "react-code-input";
 import { useNavigate } from "react-router-dom";
-// import { VerifyOTPRequest } from "../../APIRequest/ApiRequest";
+import { VerifyOTPRequest } from "../../APIRequest/APIRequest";
 import { ErrorToast } from "../../helper/FormHelper";
 import { getEmail } from "../../helper/SessionHelper";
 
@@ -25,16 +25,16 @@ const VerifyOTP = () => {
   };
   let [otp, setOtp] = useState("");
 
-//   let submitOtp = async () => {
-//     if (otp.length === 6) {
-//       const isVerified = await VerifyOTPRequest(getEmail(), otp);
-//       if (isVerified) {
-//         navigate("/createPassword");
-//       }
-//     } else {
-//       ErrorToast("OTP must Be 6 Digits");
-//     }
-//   };
+  let submitOtp = async () => {
+    if (otp.length === 6) {
+      const isVerified = await VerifyOTPRequest(getEmail(), otp);
+      if (isVerified) {
+        navigate("/createPassword");
+      }
+    } else {
+      ErrorToast("OTP must Be 6 Digits");
+    }
+  };
 
   return (
     <>
@@ -56,7 +56,7 @@ const VerifyOTP = () => {
                 />
                 <br /> <br />
                 <button
-                //   onClick={submitOtp}
+                  onClick={submitOtp}
                   className="btn btn-primary h6 float-end w-100 animated fadeInUp"
                 >
                   Next
