@@ -14,6 +14,8 @@ import ForgotpassPage from './pages/ForgotpassPage';
 import FullScreenLoader from './components/masterLayout/FullScreenLoader';
 import { Toaster } from 'react-hot-toast';
 import { getToken } from './helper/SessionHelper';
+import SendOTPPage from './pages/SendOtpPage';
+import SendOtpPage from './pages/SendOtpPage';
 
 const App = () => {
   if(getToken()){
@@ -45,8 +47,8 @@ else {
                     <Route path="/Login" element={<LoginPage />}/>
                     <Route path="/Registration" element={<RegistrationPage />}/>
 
-                    {/* <Route  path="/SendOTP" element={<SendOTPPage/>}/>
-                    <Route  path="/VerifyOTP" element={<VerifyOTPPage/>}/>
+                    <Route  path="/SendOTP" element={<SendOtpPage/>}/>
+                    {/* <Route  path="/VerifyOTP" element={<VerifyOTPPage/>}/>
                     <Route  path="/CreatePassword" element={<CreatePasswordPage/>}/> */}
 
                     <Route path="*" element={<Page404/>}/>
