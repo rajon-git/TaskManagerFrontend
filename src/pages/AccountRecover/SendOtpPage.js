@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
-import LazyLoader from "../components/masterLayout/LazyLoader";
+import LazyLoader from "../../components/masterLayout/LazyLoader";
 
-const SendOTP = lazy(() => import("../components/AccountRecover/Send-Otp"));
+const SendOTP = lazy(() => import("../../components/AccountRecover/Send-Otp"));
 
 const SendOtpPage = () => {
   return (
