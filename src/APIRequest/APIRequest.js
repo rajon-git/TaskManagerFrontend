@@ -316,3 +316,34 @@ export function VerifyOTPRequest(email,otp){
       return false;
   });
 }
+
+// Recover Password Step 03 Reset Pass
+export function ResetPassRequest(email,otp,password){
+  store.dispatch(ShowLoader())
+  let URL=BaseURL+"/resetPassword";
+  let PostBody={email:email,otp:otp,password:password}
+
+  return axios.post(URL,PostBody).then((res)=>{
+      store.dispatch(HideLoader())
+      if(res.status===200){
+
+          if(res.data['status']==="fail"){
+              ErrorToast(res.data['data']);
+              return false;
+          }
+          else{
+              setOtp(otp)
+              SuccessToast("NEW PASSWORD CREATED");
+              return true;
+          }
+      }
+      else{
+          ErrorToast("Something Went Wrong")
+          return false;
+      }
+  }).catch((err)=>{
+      ErrorToast("Something Went Wrong")
+      store.dispatch(HideLoader())
+      return false;
+  });
+}
